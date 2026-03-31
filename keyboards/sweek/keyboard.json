@@ -1,7 +1,8 @@
 {
-    "manufacturer": "earvingad",
+    "manufacturer": "QMK",
     "keyboard_name": "sweek",
-    "maintainer": "earvingad",
+    "maintainer": "sweek",
+    "processor": "RP2040",
     "bootloader": "rp2040",
     "diode_direction": "COL2ROW",
     "features": {
@@ -10,19 +11,42 @@
         "mousekey": true,
         "nkro": true
     },
-    // "matrix_pins": {
-    //     "cols": ["GP3", "GP4", "GP5", "GP6", "GP7", "GP29", "GP28", "GP27", "GP26", "GP15"],
-    //     "rows": ["D1", "D1", "D1", "D1"]
-    // },
-    "processor": "RP2040",
+    "encoder": {
+        "rotary": [
+            {"pin_a": "GP9", "pin_b": "GP10"}
+        ]
+    },
+    "matrix_pins": {
+        "cols": ["GP3", "GP4", "GP5", "GP6", "GP7"],
+        "rows": ["GP29", "GP28", "GP27", "GP26"]
+    },
     "url": "",
     "usb": {
         "device_version": "1.0.0",
         "pid": "0x0000",
         "vid": "0xFEED"
     },
+    "split": {
+        "enabled": true,
+        "serial": {
+            "driver": "vendor"
+        },
+        "encoder": {
+            "right": {
+                "rotary": [
+                    {"pin_a": "GP9", "pin_b": "GP10"}
+                ]
+            }
+        },
+        "matrix_pins": {
+            "right": {
+                "cols": ["GP29", "GP28", "GP27", "GP26", "GP15"],
+                "rows": ["GP3", "GP4", "GP5", "GP6"]
+            },
+        },
+    },
     "layouts": {
-        "LAYOUT_split_3x5_3": {
+        "LAYOUT": {
             "layout": [
                 {"matrix": [0, 0], "x": 0, "y": 0.25},
                 {"matrix": [0, 1], "x": 1, "y": 0.125},
