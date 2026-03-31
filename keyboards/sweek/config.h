@@ -1,7 +1,7 @@
 #pragma once
 
-/* #define EE_HANDS */
-#define MASTER_LEFT
+#define EE_HANDS
+/* #define MASTER_LEFT */
 /* #define MASTER_RIGHT */
 
 #define SERIAL_USART_FULL_DUPLEX
