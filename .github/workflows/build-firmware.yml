@@ -5,8 +5,8 @@ on:
   workflow_dispatch:
 
 env:
-  QMK_REPO: vial-kb/vial-qmk
-  QMK_BRANCH: vial
+  QMK_REPO: qmk/qmk_firmware
+  QMK_BRANCH: master
 
 jobs:
   build:
