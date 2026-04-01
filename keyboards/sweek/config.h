@@ -1,12 +1,12 @@
 #pragma once
 
-/* #define EE_HANDS */
+#define EE_HANDS
 /* #define MASTER_LEFT */
 /* #define MASTER_RIGHT */
 
 #define SERIAL_USART_FULL_DUPLEX
-#define SERIAL_USART_TX_PIN GP0
-#define SERIAL_USART_RX_PIN GP1
+#define SERIAL_USART_TX_PIN GP1
+#define SERIAL_USART_RX_PIN GP0
 #define SPLIT_USB_DETECT
 /* #define SPLIT_USB_TIMEOUT 2000 */
 /* #define SPLIT_LAYER_STATE_ENABLE */
