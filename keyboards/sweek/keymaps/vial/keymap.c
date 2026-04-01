@@ -36,8 +36,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               KC_LCTL   , LALT_T(KC_SPC) , LT(5,KC_ESC) ,        LT(5,KC_ENT)   , RALT_T(KC_BSPC) , OS_RSFT
     ),
     [L1] = LAYOUT(
-        _______ , _______ , _______ , _______ , _______ ,             MS_WHLR  , MS_BTN1   , MS_WHUP  , MS_BTN2   , _______  ,
-        _______ , _______ , MS_BTN1 , _______ , MS_BTN2 ,             MS_WHLL  , MS_LEFT   , MS_DOWN  , MS_UP     , MS_RIGHT ,
+        _______ , _______ , _______ , _______ , _______ ,             MS_WHLR  , MS_BTN1   , MS_WHLU  , MS_BTN2   , _______  ,
+        _______ , _______ , MS_BTN1 , _______ , MS_BTN2 ,             MS_WHLL  , MS_LEFT   , MS_DOWN  , MS_UP     , MS_RGHT  ,
         _______ , _______ , _______ , _______ , _______ ,             _______  , MS_BTN3   , MS_WHLD  , _______   , _______  ,
                             _______ , KC_SPC  , _______ ,             _______  , _______   , _______                           
     ),
@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                             _______ , _______ , _______ ,             _______   , _______   , _______                          
     ),
     [L3] = LAYOUT(
-        KC_REBOOT  , LSFT(KC_TAB) , KC_TAB       , _______ , _______ ,             _______  , KC_F7     , KC_F8     , KC_F9     , KC_F10   ,
+        QK_REBOOT  , LSFT(KC_TAB) , KC_TAB       , _______ , _______ ,             _______  , KC_F7     , KC_F8     , KC_F9     , KC_F10   ,
         LALT(KC_F4), LCS(KC_T)    , LSFT(KC_DEL) , _______ , _______ ,             _______  , KC_F4     , KC_F5     , KC_F6     , KC_F11   ,
         _______    , LCTL(KC_LALT), LCA(KC_DEL)  , _______ , _______ ,             _______  , KC_F1     , KC_F2     , KC_F3     , KC_F12   ,
                                          _______ , _______ , _______ ,             _______  , _______   , _______                           
@@ -61,13 +61,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [L5] = LAYOUT(
         KC_CAPS , KC_HOME , KC_PGUP , KC_DEL  , KC_LSFT ,             _______  , _______   , KC_PGUP   ,  KC_HOME  ,  _______ ,
-        KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT, SK_LGUI ,             TG(1)    , KC_BSPC   , _______   ,  _______  ,  _______ ,
+        KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT, OS_LGUI ,             TG(1)    , KC_BSPC   , _______   ,  _______  ,  _______ ,
         _______ , KC_END  , KC_PGDN , KC_BSPC , KC_ENT  ,             TG(6)    , _______   , KC_PGDN   ,  KC_END   ,  _______ ,
                             _______ , _______ , _______ ,             _______  , _______   , _______                           
 
     ),
     [L6] = LAYOUT(
-        LGUI(KC_1) , LGUI(KC_2) , LGUI(KC_3)    , LGUI(KC_4)   , LGUI(KC_5)  ,           _______  , _______ , _______  , _______ , KC_REBOOT,
+        LGUI(KC_1) , LGUI(KC_2) , LGUI(KC_3)    , LGUI(KC_4)   , LGUI(KC_5)  ,           _______  , _______ , _______  , _______ , QK_REBOOT,
         LGUI(KC_H) , LGUI(KC_J) , LGUI(KC_K)    , LGUI(KC_L)   , LGUI(KC_ENT),           _______  , _______ , _______  , _______ , _______  ,
         LGUI(KC_Q) , LGUI(KC_M) , LGUI(KC_COMMA), LGUI(KC_DOT) , LGUI(KC_SPC),           _______  , _______ , _______  , _______ , _______  ,
                                   KC_LGUI       , KC_LCTL      , KC_LSFT     ,           _______  , _______ , _______                        
@@ -86,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [L0] = { ENCODER_CCW_CW(KC_DOWN, KC_UP  ),  ENCODER_CCW_CW(KC_LEFT, KC_RIGHT) },
     [L1] = { ENCODER_CCW_CW(UG_HUED, UG_HUEU),  ENCODER_CCW_CW(LSFT(KC_TAB), KC_TAB)  },
-    [L2] = { ENCODER_CCW_CW(UG_VALD, UG_VALU),  ENCODER_CCW_CW(LCTL(MS_WHDOWN), LCTL(MC_WHUP))  },
+    [L2] = { ENCODER_CCW_CW(UG_VALD, UG_VALU),  ENCODER_CCW_CW(LCTL(MS_WHLD), LCTL(MC_WHLU))  },
     [L3] = { ENCODER_CCW_CW(UG_PREV, UG_NEXT),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [L4] = { ENCODER_CCW_CW(LSFT(KC_LEFT), LSFT(KC_RIGHT)),  ENCODER_CCW_CW(KC_RIGHT, KC_LEFT) },
     [L5] = { ENCODER_CCW_CW(UG_PREV, UG_NEXT),  ENCODER_CCW_CW(KC_DOWN, KC_UP) },
