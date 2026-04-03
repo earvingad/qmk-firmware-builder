@@ -33,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_Q    , KC_W      , KC_F      , KC_P           , KC_G   ,              KC_J     , KC_L      , KC_O      , KC_Y      , KC_SCLN ,
         KC_A    , LT(1,KC_R), LT(2,KC_S), LT(3,KC_T)     , KC_D   ,              KC_H     , LT(6,KC_N), LT(4,KC_E), KC_I      , KC_U    ,
         KC_Z    , KC_X      , KC_C      , KC_V           , KC_B   ,              KC_K     , KC_M      , KC_COMMA  , KC_DOT    , KC_SLSH ,
-                              KC_LCTL   , LALT_T(KC_SPC) , LT(5,KC_ESC) ,        LT(5,KC_ENT)   , RALT_T(KC_BSPC) , OS_RSFT
+                              KC_LCTL   , LALT_T(KC_SPC) , LT(5,KC_ESC) ,        LT(5,KC_ENT)   , RALT_T(KC_BSPC) , OSM(MOD_RSFT)
     ),
     [L1] = LAYOUT(
         _______ , _______ , _______ , _______ , _______ ,             MS_WHLR  , MS_BTN1   , MS_WHLU  , MS_BTN2   , _______  ,
@@ -49,8 +49,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [L3] = LAYOUT(
         QK_REBOOT  , LSFT(KC_TAB) , KC_TAB       , _______ , _______ ,             _______  , KC_F7     , KC_F8     , KC_F9     , KC_F10   ,
-        LALT(KC_F4), LCS(KC_T)    , LSFT(KC_DEL) , _______ , _______ ,             _______  , KC_F4     , KC_F5     , KC_F6     , KC_F11   ,
-        _______    , LCTL(KC_LALT), LCA(KC_DEL)  , _______ , _______ ,             _______  , KC_F1     , KC_F2     , KC_F3     , KC_F12   ,
+        LALT(KC_F4), LCTL(LSFT(KC_T))    , LSFT(KC_DEL) , _______ , _______ ,             _______  , KC_F4     , KC_F5     , KC_F6     , KC_F11   ,
+        _______    , LCTL(KC_LALT), LCTL(LALT(KC_DEL))  , _______ , _______ ,             _______  , KC_F1     , KC_F2     , KC_F3     , KC_F12   ,
                                          _______ , _______ , _______ ,             _______  , _______   , _______                           
     ),
     [L4] = LAYOUT(
@@ -61,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [L5] = LAYOUT(
         KC_CAPS , KC_HOME , KC_PGUP , KC_DEL  , KC_LSFT ,             _______  , _______   , KC_PGUP   ,  KC_HOME  ,  _______ ,
-        KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT, OS_LGUI ,             TG(1)    , KC_BSPC   , _______   ,  _______  ,  _______ ,
+        KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT, OSM(MOD_LGUI) ,             TG(1)    , KC_BSPC   , _______   ,  _______  ,  _______ ,
         _______ , KC_END  , KC_PGDN , KC_BSPC , KC_ENT  ,             TG(6)    , _______   , KC_PGDN   ,  KC_END   ,  _______ ,
                             _______ , _______ , _______ ,             _______  , _______   , _______                           
 
