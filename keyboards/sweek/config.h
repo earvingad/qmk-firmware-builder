@@ -1,7 +1,7 @@
 #pragma once
 
 /* #define EE_HANDS */
-#define MASTER_RIGHT
+#define MASTER_LEFT
 
 #define SERIAL_USART_FULL_DUPLEX
 #define SERIAL_USART_TX_PIN GP0
