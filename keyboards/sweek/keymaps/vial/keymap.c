@@ -5,6 +5,8 @@
 #include "report.h"
 #include "host.h"
 
+ASSERT_COMMUNITY_MODULES_MIN_API_VERSION(1, 0, 0);
+
 enum custom_keycodes {
   MOUSEJIGGLER
 };
@@ -185,7 +187,7 @@ void mouse_jiggler_toggle(void) {
 }
 
 bool process_record_mousejiggler(uint16_t keycode, keyrecord_t *record) {
-    if (!process_record_mousejiggler(keycode, record)) {
+    if (!process_record_mousejiggler_kb(keycode, record)) {
         return false;
     }
     switch (keycode) {
