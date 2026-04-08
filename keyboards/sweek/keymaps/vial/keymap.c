@@ -185,6 +185,9 @@ void mouse_jiggler_toggle(void) {
 }
 
 bool process_record_mousejiggler(uint16_t keycode, keyrecord_t *record) {
+    if (!process_record_mousejiggler(keycode, record)) {
+        return false;
+    }
     switch (keycode) {
         case MOUSEJIGGLER:
             if (record->event.pressed) {
