@@ -3,6 +3,10 @@
 #include QMK_KEYBOARD_H
 /* #include <stdio.h> */
 
+enum custom_keycodes {
+  MOUSEJIGGLER
+};
+bool mouse_jiggle_mode = false;
 
 enum layers {
     L0,
@@ -60,9 +64,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                             _______ , _______ , _______ ,             KC_RCTL  , _______   , _______                           
     ),
     [L5] = LAYOUT(
-        KC_CAPS , KC_HOME , KC_PGUP , KC_DEL  , KC_LSFT ,             _______  , _______   , KC_PGUP   ,  KC_HOME  ,  _______ ,
-        KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT, OSM(MOD_LGUI) ,       TG(1)    , KC_BSPC   , _______   ,  _______  ,  _______ ,
-        _______ , KC_END  , KC_PGDN , KC_BSPC , KC_ENT  ,             TG(6)    , _______   , KC_PGDN   ,  KC_END   ,  _______ ,
+        KC_CAPS , KC_HOME , KC_PGUP , KC_DEL  , KC_LSFT ,             _______  , _______   , KC_PGUP   ,  KC_HOME  ,  _______      ,
+        KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT, OSM(MOD_LGUI) ,       TG(1)    , KC_BSPC   , _______   ,  _______  ,  MOUSEJIGGLER ,
+        _______ , KC_END  , KC_PGDN , KC_BSPC , KC_ENT  ,             TG(6)    , _______   , KC_PGDN   ,  KC_END   ,  _______      ,
                             _______ , _______ , _______ ,             _______  , _______   , _______                           
 
     ),
@@ -144,4 +148,34 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(5, layer_state_cmp(state, L5));
     rgblight_set_layer_state(6, layer_state_cmp(state, L6));
     return state;
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case MOUSEJIGGLER:
+      if (record->event.pressed) {
+        if (mouse_jiggle_mode)
+            SEND_STRING(SS_DELAY(15));
+            mouse_jiggle_mode = false;
+        } else {
+            SEND_STRING(SS_DELAY(15));
+            mouse_jiggle_mode = true;
+        }
+      } else {
+      }
+      break;
+  }
+  return true;
+}
+
+void matrix_scan_user(void) {
+  if (mouse_jiggle_mode) {
+    SEND_STRING(SS_DELAY(10));
+    tap_code(KC_MS_UP);
+    tap_code(KC_MS_DOWN);
+    SEND_STRING(SS_DELAY(30));
+    tap_code(KC_MS_LEFT);
+    tap_code(KC_MS_RIGHT);
+  } else { 
+  } 
 }
