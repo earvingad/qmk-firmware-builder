@@ -1,25 +1,6 @@
 // Copyright 2023 QMK
 // SPDX-License-Identifier: GPL-2.0-or-later
 #include QMK_KEYBOARD_H
-/* #include <stdio.h> */
-#include "report.h"
-#include "host.h"
-
-enum custom_keycodes {
-  MOUSEJIGGLER
-};
-
-static bool     mouse_jiggler_enabled = false;
-static uint16_t mouse_jiggler_timer   = 0;
-static int8_t   jiggle_direction      = 1;
-
-#ifndef MOUSE_JIGGLER_INTERVAL_MS
-#    define MOUSE_JIGGLER_INTERVAL_MS 1000
-#endif
-
-#ifndef MOUSE_JIGGLER_MOVEMENT
-#    define MOUSE_JIGGLER_MOVEMENT 1
-#endif
 
 enum layers {
     L0,
@@ -77,9 +58,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                             _______ , _______ , _______ ,             KC_RCTL  , _______   , _______                           
     ),
     [L5] = LAYOUT(
-        KC_CAPS , KC_HOME , KC_PGUP , KC_DEL  , KC_LSFT ,             _______  , _______   , KC_PGUP   ,  KC_HOME  ,  _______      ,
-        KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT, OSM(MOD_LGUI) ,       TG(1)    , KC_BSPC   , _______   ,  _______  ,  MOUSEJIGGLER ,
-        _______ , KC_END  , KC_PGDN , KC_BSPC , KC_ENT  ,             TG(6)    , _______   , KC_PGDN   ,  KC_END   ,  _______      ,
+        KC_CAPS , KC_HOME , KC_PGUP , KC_DEL  , KC_LSFT ,             _______  , _______   , KC_PGUP   ,  KC_HOME  ,  _______ ,
+        KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT, OSM(MOD_LGUI) ,       TG(1)    , KC_BSPC   , _______   ,  _______  ,  _______ ,
+        _______ , KC_END  , KC_PGDN , KC_BSPC , KC_ENT  ,             TG(6)    , _______   , KC_PGDN   ,  KC_END   ,  _______ ,
                             _______ , _______ , _______ ,             _______  , _______   , _______                           
 
     ),
@@ -161,52 +142,4 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(5, layer_state_cmp(state, L5));
     rgblight_set_layer_state(6, layer_state_cmp(state, L6));
     return state;
-}
-
-bool mouse_jiggler_is_enabled(void) {
-    return mouse_jiggler_enabled;
-}
-
-void mouse_jiggler_enable(void) {
-    mouse_jiggler_enabled = true;
-    mouse_jiggler_timer   = timer_read();
-}
-
-void mouse_jiggler_disable(void) {
-    mouse_jiggler_enabled = false;
-}
-
-void mouse_jiggler_toggle(void) {
-    if (mouse_jiggler_enabled) {
-        mouse_jiggler_disable();
-    } else {
-        mouse_jiggler_enable();
-    }
-}
-
-bool process_record_mousejiggler(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case MOUSEJIGGLER:
-            if (record->event.pressed) {
-                mouse_jiggler_toggle();
-            }
-            return false;
-    }
-
-    return true;
-}
-
-void housekeeping_task_mousejiggler(void) {
-    if (mouse_jiggler_enabled) {
-        if (timer_elapsed(mouse_jiggler_timer) > MOUSE_JIGGLER_INTERVAL_MS) {
-            mouse_jiggler_timer = timer_read();
-
-            report_mouse_t report = {0};
-            report.x              = MOUSE_JIGGLER_MOVEMENT * jiggle_direction;
-
-            host_mouse_send(&report);
-
-            jiggle_direction = -jiggle_direction;
-        }
-    }
 }
