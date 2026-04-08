@@ -2,11 +2,24 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 #include QMK_KEYBOARD_H
 /* #include <stdio.h> */
+#include "report.h"
+#include "host.h"
 
 enum custom_keycodes {
   MOUSEJIGGLER
 };
-bool mouse_jiggle_mode = false;
+
+static bool     mouse_jiggler_enabled = false;
+static uint16_t mouse_jiggler_timer   = 0;
+static int8_t   jiggle_direction      = 1;
+
+#ifndef MOUSE_JIGGLER_INTERVAL_MS
+#    define MOUSE_JIGGLER_INTERVAL_MS 1000
+#endif
+
+#ifndef MOUSE_JIGGLER_MOVEMENT
+#    define MOUSE_JIGGLER_MOVEMENT 1
+#endif
 
 enum layers {
     L0,
@@ -150,32 +163,54 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case MOUSEJIGGLER:
-      if (record->event.pressed) {
-        if (mouse_jiggle_mode) {
-            SEND_STRING(SS_DELAY(15));
-            mouse_jiggle_mode = false;
-        } else {
-            SEND_STRING(SS_DELAY(15));
-            mouse_jiggle_mode = true;
-        }
-      } else {
-      }
-      break;
-  }
-  return true;
+bool mouse_jiggler_is_enabled(void) {
+    return mouse_jiggler_enabled;
 }
 
-void matrix_scan_user(void) {
-  if (mouse_jiggle_mode) {
-    SEND_STRING(SS_DELAY(10));
-    tap_code(KC_MS_UP);
-    tap_code(KC_MS_DOWN);
-    SEND_STRING(SS_DELAY(30));
-    tap_code(KC_MS_LEFT);
-    tap_code(KC_MS_RIGHT);
-  } else { 
-  } 
+void mouse_jiggler_enable(void) {
+    mouse_jiggler_enabled = true;
+    mouse_jiggler_timer   = timer_read();
+}
+
+void mouse_jiggler_disable(void) {
+    mouse_jiggler_enabled = false;
+}
+
+void mouse_jiggler_toggle(void) {
+    if (mouse_jiggler_enabled) {
+        mouse_jiggler_disable();
+    } else {
+        mouse_jiggler_enable();
+    }
+}
+
+bool process_record_mousejiggler(uint16_t keycode, keyrecord_t *record) {
+    if (!process_record_mousejiggler_kb(keycode, record)) {
+        return false;
+    }
+
+    switch (keycode) {
+        case MOUSEJIGGLER:
+            if (record->event.pressed) {
+                mouse_jiggler_toggle();
+            }
+            return false;
+    }
+
+    return true;
+}
+
+void housekeeping_task_mousejiggler(void) {
+    if (mouse_jiggler_enabled) {
+        if (timer_elapsed(mouse_jiggler_timer) > MOUSE_JIGGLER_INTERVAL_MS) {
+            mouse_jiggler_timer = timer_read();
+
+            report_mouse_t report = {0};
+            report.x              = MOUSE_JIGGLER_MOVEMENT * jiggle_direction;
+
+            host_mouse_send(&report);
+
+            jiggle_direction = -jiggle_direction;
+        }
+    }
 }
