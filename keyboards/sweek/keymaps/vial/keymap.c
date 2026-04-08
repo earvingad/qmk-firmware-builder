@@ -154,7 +154,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case MOUSEJIGGLER:
       if (record->event.pressed) {
-        if (mouse_jiggle_mode)
+        if (mouse_jiggle_mode) {
             SEND_STRING(SS_DELAY(15));
             mouse_jiggle_mode = false;
         } else {
